@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'app', #new
     'rest_framework', #new
+    'corsheaders', # new
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,18 +78,18 @@ WSGI_APPLICATION = 'drf_products.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    #}
     'default': {
-       'ENGINE': 'django.db.backends.mysql',
-       'NAME': 'drf_products',
-       'USER': 'test',
-       'PASSWORD': 'abc@123',
-       'HOST': '34.87.51.9',
-       'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    #'default': {
+    #   'ENGINE': 'django.db.backends.mysql',
+    #   'NAME': 'drf_products',
+    #   'USER': 'test',
+    #   'PASSWORD': 'abc@123',
+    #   'HOST': '34.87.51.9',
+    #   'PORT': '',
+    #}
 }
 
 

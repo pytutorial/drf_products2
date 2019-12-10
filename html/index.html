@@ -1,0 +1,17 @@
+<!--index.html-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<a href='category_list.html'>Quản lý nhóm sản phẩm</a><br>
+<a href='product_list.html'>Quản lý sản phẩm</a><br>
+<a href="#" onclick="logOut()">Đăng xuất</a><br>
+
+<script>
+    if(!sessionStorage.getItem('token')) {
+        location.href = 'login.html';
+    }
+
+    function logOut() {
+        sessionStorage.removeItem('token');
+        location.href = 'login.html';
+    }
+</script>

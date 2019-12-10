@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<div id="app" class="container">
+  <table class="table table-bordered">
+    <tr><th>STT</th> <th>Mã</th> <th>Tên</th></tr>
+    <tr v-for='(c,i) in categories'>
+      <td>{{i+1}}</td>
+      <td>{{c.code}}</td>
+      <td>{{c.name}}</td>
+    </tr>
+  </table>
+  <a class="btn btn-secondary" href="index.html">Trang chủ</a>
+  <a class="btn btn-primary" href="create_update_category.html">
+    Thêm nhóm sản phẩm
+  </a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+    el:'#app', 
+    data: { categories: []},
+    created: async function() {
+      var resp = await fetch('http://localhost:8000/get_category_list');
+      this.categories = await resp.json();
+      console.log(this.categories);
+    }
+  })
+</script>

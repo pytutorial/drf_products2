@@ -1,0 +1,40 @@
+<!--create_update_category.html-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<div id='app' class="container">
+  <form id='fmt'>
+    <table class="table">
+      <tr>
+        <th>Mã nhóm sản phẩm:</th>
+        <td><input class="form-control" name="code"></td>
+      </tr>
+      <tr>
+        <th>Tên nhóm sản phẩm:</th>
+        <td><input class="form-control" name="name"></td>
+      </tr>
+    </table>
+    <button v-on:click='save()' class="btn btn-primary" type="button">Lưu lại</button>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+    el:'#app',
+    methods: {
+      post: async function(url, formData) {
+        var resp = await fetch(url, {
+                    method:'POST', body: formData});
+        return resp.json();
+      },
+      save: async function() {
+        var fmt = document.getElementById('fmt');
+        var result = await this.post('http://localhost:8000/create_category',
+                            new FormData(fmt));
+        if(result.success) {
+          location.href = 'category_list.html';
+        }else{
+          alert('Lỗi xảy ra khi ghi dữ liệu');
+        }
+      }
+    }
+  })
+</script>
