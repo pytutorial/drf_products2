@@ -34,8 +34,34 @@ def createCategory(request):
         return Response({'success': False, 'errors': serializer.errors})
 
 from .models import *
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+
 @api_view(['GET'])
+@permission_classes((IsAuthenticated,))
 def getCategoryList(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteCategory(request, id):
+    category = Category.objects.get(id=id)
+    category.delete()
+    return Response({'success': True})
+
+@api_view(['GET'])    
+def getCategory(request, id):
+    category = Category.objects.get(id=id)
+    serializer = CategorySerializer(category)
+    return Response(serializer.data)
+
+@api_view(['PUT'])
+def updateCategory(request, id):
+    category = Category.objects.get(id=id)
+    serializer = CategorySerializer(data=request.data, instance=category)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'success': True})
+    else:
+        return Response({'success': False, 'errors': serializer.errors})

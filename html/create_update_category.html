@@ -41,11 +41,11 @@
       <table class="table">
         <tr>
           <th>Mã nhóm sản phẩm:</th>
-          <td><input class="form-control" name="code"></td>
+          <td><input class="form-control" v-model="category.code" name="code"></td>
         </tr>
         <tr>
           <th>Tên nhóm sản phẩm:</th>
-          <td><input class="form-control" name="name"></td>
+          <td><input class="form-control" v-model="category.name" name="name"></td>
         </tr>
       </table>
       <a class='btn btn-secondary' href='category_list.html'>Quay lại</a>
@@ -58,6 +58,17 @@
 <script>
   new Vue({
     el: '#app',
+    data: {id : null, category: {}},
+    created: async function() {
+      var pos = location.href.indexOf('?id=');
+      this.id = (pos >0)? location.href.substring(pos+4) : null;
+      
+      if(this.id) {
+        var resp = await fetch("http://localhost:8000/get_category/"+this.id);
+        this.category = await resp.json();
+      }
+    },
+
     methods: {
       post: async function (url, formData) {
         var resp = await fetch(url, {
@@ -65,10 +76,27 @@
         });
         return resp.json();
       },
+      put: async function (url, body) {
+        var resp = await fetch(url, {
+          method: 'PUT', body: body,
+          headers: {"Content-Type": "application/json"}
+        });
+        return resp.json();
+      },
       save: async function () {
-        var fmt = document.getElementById('fmt');
-        var result = await this.post('http://localhost:8000/create_category',
-          new FormData(fmt));
+        var result = {};
+
+        if(this.id) {
+          var body = JSON.stringify(this.category);
+          result = await 
+                    this.put('http:localhost:8000/update_category/'+this.id, 
+                              body);
+        }else{
+          var fmt = document.getElementById('fmt');
+          result = await this.post('http://localhost:8000/create_category',
+            new FormData(fmt));
+        }
+          
         if (result.success) {
           location.href = 'category_list.html';
         } else {
