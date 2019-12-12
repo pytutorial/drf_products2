@@ -1,17 +1,80 @@
-<!--index.html-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<a href='category_list.html'>Quản lý nhóm sản phẩm</a><br>
-<a href='product_list.html'>Quản lý sản phẩm</a><br>
-<a href="#" onclick="logOut()">Đăng xuất</a><br>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary p-0">
+  <div class="navbar-nav">
+    <a class="nav-item nav-link active" href="index.html">Quản lý sản phẩm</a>
+    <a class="nav-item nav-link" href="category_list.html">Quản lý nhóm sản phẩm</a>
+  </div>
+
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item dropdown no-arrow">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+        <img class="rounded-circle" style="width:60px" src="user.svg">
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" href="#">
+          Thông tin tài khoản
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" onclick="logOut()">
+          Đăng xuất
+        </a>
+      </div>
+    </li>
+  </ul>
+</nav>
 
 <script>
-    if(!sessionStorage.getItem('token')) {
-        location.href = 'login.html';
-    }
+  if (!sessionStorage.getItem('token')) {
+    location.href = 'login.html';
+  }
 
-    function logOut() {
-        sessionStorage.removeItem('token');
-        location.href = 'login.html';
+  function logOut() {
+    sessionStorage.removeItem('token');
+    location.href = 'login.html';
+  }
+</script>
+
+<div id='app' class="mt-3 container">
+  <template>
+    <table class="table table-bordered">
+      <tr>
+        <th>STT</th>
+        <th>Mã</th>
+        <th>Tên</th>
+        <th>Nhóm sản phẩm</th>
+        <th>Mô tả</th>
+        <th>Giá</th>
+        <th>Ảnh</th>
+        <th></th>
+      </tr>
+      <tr v-for='(p,i) in products'>
+        <td>{{i+1}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <a class="btn btn-primary" href="create_update_product.html">
+      Thêm nhóm sản phẩm
+    </a>
+  </template>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: { products: [] },
+    created: async function () {
     }
+  })
 </script>

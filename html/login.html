@@ -1,5 +1,13 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<div id='app' class="container">
+<style>
+  .login-form {
+    border: 1px solid #DDD;
+    max-width: 400px;
+    padding: 20px;
+    margin: 50 auto 0 auto;
+  }
+</style>
+<div id='app' class="login-form">
   <div class="form-group">
     <label>Tên tài khoản:</label>
     <input class="form-control" v-model="username">
@@ -11,12 +19,13 @@
   <button class="btn btn-primary" type="button" v-on:click="logIn()">
     Đăng nhập
   </button>
+  <a class="btn btn-secondary" href='signup.html'>Đăng ký tài khoản</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
   new Vue({
     el: '#app',
-    data: { username: '', password: ''},
+    data: { username: '', password: '' },
     methods: {
       post: async function (url, params) {
         var resp = await fetch(url, {
@@ -28,12 +37,12 @@
       },
       logIn: async function () {
         var params = { username: this.username, password: this.password };
-        var result = await this.post('http://localhost:8000/api/token', 
-                                      params);
-        if(result.access){
+        var result = await this.post('http://localhost:8000/api/token',
+          params);
+        if (result.access) {
           sessionStorage.setItem('token', result.access);
           location.href = 'index.html';
-        }else{
+        } else {
           alert('Tên đăng nhập hoặc mật khẩu không đúng');
         }
       }
